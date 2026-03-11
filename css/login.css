@@ -232,17 +232,13 @@
 
 .input-wrapper input {
     width: 100%;
-    padding: 14px 16px 14px 48px;
+    padding: 14px 48px 14px 48px;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-md);
     color: var(--color-white);
     font-size: 15px;
     transition: all var(--transition-base);
-}
-
-.input-wrapper:has(.toggle-password) input {
-    padding-right: 48px;
 }
 
 .input-wrapper input::placeholder {
