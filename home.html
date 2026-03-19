@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sementis - Trilhas de Aprendizado</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="home-page">
+    <!-- Header -->
+    <header class="home-header">
+        <div class="header-top">
+            <img src="assets/brand/logo_sementis_branco.png" alt="Sementis Logo" class="header-logo">
+            <div class="user-stats">
+                <div class="stat-item">
+                    <img src="assets/icons/icone_sequencia_fogo.png" alt="Sequência" class="stat-icon">
+                    <span class="stat-value">7</span>
+                </div>
+                <div class="stat-item">
+                    <img src="assets/icons/icone_moeda.png" alt="Moedas" class="stat-icon">
+                    <span class="stat-value">250</span>
+                </div>
+                <div class="stat-item">
+                    <img src="assets/icons/icone_vida.png" alt="Vidas" class="stat-icon">
+                    <span class="stat-value">5</span>
+                </div>
+                <button class="profile-btn">
+                    <img src="assets/icons/icone_usuario.png" alt="Perfil">
+                </button>
+            </div>
+        </div>
+
+        <div class="user-progress">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="assets/icons/icone_usuario.png" alt="Avatar">
+                </div>
+                <div class="user-details">
+                    <h2 class="user-name">Estudante</h2>
+                    <p class="user-level">Nível 5 - Bronze</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%"></div>
+            </div>
+            <span class="progress-text">60% para o próximo nível</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-content">
+        <div class="content-wrapper">
+            <section class="daily-goal">
+                <div class="goal-card">
+                    <img src="assets/icons/menu_rodape_alvo.png" alt="Meta Diária" class="goal-icon">
+                    <div class="goal-info">
+                        <h3>Meta Diária</h3>
+                        <p>Complete 3 lições hoje</p>
+                        <div class="goal-progress">
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress-fill" style="width: 33%"></div>
+                            </div>
+                            <span class="goal-count">1/3</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="learning-trails">
+                <h2 class="section-title">Trilhas de Aprendizado</h2>
+
+                <div class="trail-path">
+                    <!-- Trail Item 1 - Básico (Completed) -->
+                    <div class="trail-item completed">
+                        <div class="trail-node">
+                            <img src="assets/tarefas/tarefa_basico1.png" alt="Básico" class="trail-icon">
+                            <img src="assets/tarefas/tarefa_completa_selo.png" alt="Completo" class="complete-badge">
+                        </div>
+                        <div class="trail-info">
+                            <h3 class="trail-title">Fundamentos</h3>
+                            <p class="trail-description">Conceitos básicos de sustentabilidade</p>
+                            <div class="trail-progress">
+                                <span class="progress-label">5/5 lições</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trail-connector"></div>
+
+                    <!-- Trail Item 2 - Água (In Progress) -->
+                    <div class="trail-item active">
+                        <div class="trail-node pulse">
+                            <img src="assets/tarefas/tarefa_agua.png" alt="Água" class="trail-icon">
+                            <div class="active-indicator"></div>
+                        </div>
+                        <div class="trail-info">
+                            <h3 class="trail-title">Água e Vida</h3>
+                            <p class="trail-description">Conservação e uso consciente da água</p>
+                            <div class="trail-progress">
+                                <div class="progress-bar-small">
+                                    <div class="progress-fill-small" style="width: 60%"></div>
+                                </div>
+                                <span class="progress-label">3/5 lições</span>
+                            </div>
+                            <button class="btn-continue">Continuar</button>
+                        </div>
+                    </div>
+
+                    <div class="trail-connector"></div>
+
+                    <!-- Trail Item 3 - Clima (Unlocked) -->
+                    <div class="trail-item unlocked">
+                        <div class="trail-node">
+                            <img src="assets/tarefas/tarefa_clima.png" alt="Clima" class="trail-icon">
+                        </div>
+                        <div class="trail-info">
+                            <h3 class="trail-title">Mudanças Climáticas</h3>
+                            <p class="trail-description">Entenda o aquecimento global</p>
+                            <div class="trail-progress">
+                                <span class="progress-label">0/5 lições</span>
+                            </div>
+                            <button class="btn-start">Começar</button>
+                        </div>
+                    </div>
+
+                    <div class="trail-connector locked"></div>
+
+                    <!-- Trail Item 4 - Consumo Consciente (Locked) -->
+                    <div class="trail-item locked">
+                        <div class="trail-node">
+                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="trail-icon">
+                        </div>
+                        <div class="trail-info">
+                            <h3 class="trail-title">Consumo Consciente</h3>
+                            <p class="trail-description">Aprenda a consumir com responsabilidade</p>
+                            <div class="trail-progress">
+                                <span class="progress-label">Bloqueado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trail-connector locked"></div>
+
+                    <!-- Trail Item 5 - Horta (Locked) -->
+                    <div class="trail-item locked">
+                        <div class="trail-node">
+                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="trail-icon">
+                        </div>
+                        <div class="trail-info">
+                            <h3 class="trail-title">Horta Sustentável</h3>
+                            <p class="trail-description">Cultive seu próprio alimento</p>
+                            <div class="trail-progress">
+                                <span class="progress-label">Bloqueado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Games Section -->
+            <section class="quick-games">
+                <h2 class="section-title">Mini-Jogos Rápidos</h2>
+                <div class="games-grid">
+                    <div class="game-quick-card">
+                        <img src="assets/jogos/flappy-fish/jogo_flappy_fish_peixe.png" alt="Flappy Fish" class="game-thumb">
+                        <div class="game-overlay">
+                            <h3>Flappy Fish</h3>
+                            <p>Desvie da poluição</p>
+                        </div>
+                    </div>
+                    <div class="game-quick-card">
+                        <img src="assets/jogos/garbage-recycle/jogo_garbage_recycle_cesto_lixo_reciclavel.png" alt="Garbage Recycle" class="game-thumb">
+                        <div class="game-overlay">
+                            <h3>Garbage Recycle</h3>
+                            <p>Separe o lixo</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Preview -->
+            <section class="achievements-preview">
+                <h2 class="section-title">Conquistas Recentes</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <img src="assets/ligas/liga_medalha_bronze.png" alt="Medalha Bronze">
+                        <p>Primeira Lição</p>
+                    </div>
+                    <div class="achievement-card">
+                        <img src="assets/ligas/missao_alvo_bronze.png" alt="Missão Bronze">
+                        <p>3 Dias Seguidos</p>
+                    </div>
+                    <div class="achievement-card locked-achievement">
+                        <img src="assets/ligas/liga_trofeu_bloqueado.png" alt="Bloqueado">
+                        <p>Bloqueado</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="sidebar-logo">
+            <img src="assets/brand/logo_sementis_branco.png" alt="Sementis">
+        </div>
+        <div class="nav-items-wrapper">
+            <button class="nav-item active">
+                <img src="assets/icons/menu_rodape_tarefa.png" alt="Trilhas">
+                <span>Trilhas</span>
+            </button>
+            <button class="nav-item">
+                <img src="assets/icons/menu_rodape_trofeu_liga.png" alt="Ligas">
+                <span>Ligas</span>
+            </button>
+            <button class="nav-item">
+                <img src="assets/icons/menu_rodape_alvo.png" alt="Missões">
+                <span>Missões</span>
+            </button>
+            <button class="nav-item">
+                <img src="assets/icons/menu_rodape_usuario.png" alt="Perfil">
+                <span>Perfil</span>
+            </button>
+        </div>
+    </nav>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
