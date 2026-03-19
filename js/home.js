@@ -1,11 +1,17 @@
 // ===== Home Page JavaScript =====
 
+// View management state
+let currentView = 'home'; // 'home', 'modules', 'trail-detail'
+let currentModule = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     initBottomNav();
     initTrailInteractions();
     initGameCards();
     initAchievements();
     animateProgressBars();
+    initModulesView();
+    initTrailDetailView();
 });
 
 // ===== Bottom Navigation =====
@@ -38,7 +44,8 @@ function handleNavigation(section) {
 
     switch(section) {
         case 'Trilhas':
-            // Already on trails page
+            // Show modules view
+            showModulesView();
             break;
         case 'Ligas':
             console.log('Navigate to leagues page');
@@ -404,3 +411,149 @@ function playWelcomeAnimation() {
 playWelcomeAnimation();
 
 console.log('Home page loaded successfully!');
+
+// ===== View Management =====
+function showHomeView() {
+    currentView = 'home';
+
+    // Hide all views
+    document.querySelector('.modules-view').style.display = 'none';
+    document.querySelector('.trail-detail-view').style.display = 'none';
+
+    // Show home view
+    document.querySelector('.content-wrapper').style.display = 'flex';
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    console.log('Showing home view');
+}
+
+function showModulesView() {
+    currentView = 'modules';
+
+    // Hide other views
+    document.querySelector('.content-wrapper').style.display = 'none';
+    document.querySelector('.trail-detail-view').style.display = 'none';
+
+    // Show modules view
+    document.querySelector('.modules-view').style.display = 'block';
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    console.log('Showing modules view');
+}
+
+function showTrailDetailView(moduleName, moduleTitle) {
+    currentView = 'trail-detail';
+    currentModule = moduleName;
+
+    // Hide other views
+    document.querySelector('.content-wrapper').style.display = 'none';
+    document.querySelector('.modules-view').style.display = 'none';
+
+    // Show trail detail view
+    document.querySelector('.trail-detail-view').style.display = 'block';
+
+    // Update trail title
+    document.getElementById('trailDetailTitle').textContent = moduleTitle;
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    console.log('Showing trail detail for:', moduleName);
+}
+
+// Make functions globally accessible
+window.showHomeView = showHomeView;
+window.showModulesView = showModulesView;
+window.showTrailDetailView = showTrailDetailView;
+
+// ===== Modules View Initialization =====
+function initModulesView() {
+    const moduleCards = document.querySelectorAll('.module-card');
+
+    moduleCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Don't navigate if locked
+            if (card.classList.contains('locked')) {
+                showNotification('Complete as lições anteriores para desbloquear este módulo!', 'info');
+                return;
+            }
+
+            const moduleName = card.getAttribute('data-module');
+            const moduleTitle = card.querySelector('.module-title').textContent;
+
+            // Show trail detail view for this module
+            showTrailDetailView(moduleName, moduleTitle);
+        });
+
+        // Add hover effect for non-locked cards
+        if (!card.classList.contains('locked')) {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        }
+    });
+}
+
+// ===== Trail Detail View Initialization =====
+function initTrailDetailView() {
+    // Initialize lesson buttons
+    const continueButtons = document.querySelectorAll('.btn-lesson-continue');
+    const startButtons = document.querySelectorAll('.btn-lesson-start');
+
+    continueButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleLessonClick('continue');
+        });
+    });
+
+    startButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleLessonClick('start');
+        });
+    });
+
+    // Add click handlers to lesson items
+    const lessonItems = document.querySelectorAll('.lesson-item');
+    lessonItems.forEach(item => {
+        if (!item.classList.contains('locked')) {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', () => {
+                if (item.classList.contains('completed')) {
+                    showNotification('Lição já concluída! Revise quando quiser.', 'info');
+                } else if (item.classList.contains('active')) {
+                    handleLessonClick('continue');
+                } else if (item.classList.contains('available')) {
+                    handleLessonClick('start');
+                }
+            });
+        } else {
+            item.addEventListener('click', () => {
+                showNotification('Complete as lições anteriores para desbloquear!', 'info');
+            });
+        }
+    });
+}
+
+function handleLessonClick(action) {
+    const message = action === 'continue' ?
+        'Continuando lição...' :
+        'Iniciando lição...';
+
+    showNotification(message, 'success');
+
+    // Simulate loading lesson
+    setTimeout(() => {
+        console.log('Load lesson:', action);
+        // window.location.href = 'lesson.html?module=' + currentModule;
+    }, 500);
+}
