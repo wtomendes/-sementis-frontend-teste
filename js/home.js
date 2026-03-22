@@ -187,62 +187,32 @@ function handleNavigation(section) {
 
 // ===== Trail Interactions =====
 function initTrailInteractions() {
-    const trailCards = document.querySelectorAll('.trail-card');
-    let lastTappedCard = null;
+    const trailCards = document.querySelectorAll('.trail-card, .trail-step, .trilha-step');
 
     trailCards.forEach(card => {
-        const trailTitle = card.querySelector('.trail-title').textContent;
+        const titleElement = card.querySelector('.trail-title, .trail-step-title, .trilha-step-title');
+        const trailTitle = titleElement ? titleElement.textContent : 'Trilha';
+        const moduleName = card.getAttribute('data-module');
+        const trilhaId = card.getAttribute('data-trilha');
 
-        // Click handler for trail cards
-        card.addEventListener('click', (e) => {
-            const isMobile = window.innerWidth <= 768;
-
+        card.addEventListener('click', () => {
             if (card.classList.contains('locked')) {
                 showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
                 return;
             }
 
-            if (isMobile) {
-                // Mobile: First tap shows tooltip, second tap within 3s navigates
-                if (lastTappedCard && lastTappedCard !== card) {
-                    lastTappedCard.classList.remove('show-tooltip');
-                }
-
-                if (!card.classList.contains('show-tooltip')) {
-                    card.classList.add('show-tooltip');
-                    lastTappedCard = card;
-
-                    // Auto-hide tooltip after 5 seconds
-                    setTimeout(() => {
-                        card.classList.remove('show-tooltip');
-                    }, 5000);
-                } else {
-                    // Second tap - navigate
-                    if (card.classList.contains('completed')) {
-                        showNotification('Trilha completa! Revise as lições quando quiser.', 'info');
-                    } else {
-                        showTrailDetails(trailTitle);
-                    }
-                }
-            } else {
-                // Desktop: Click to navigate immediately
-                if (card.classList.contains('completed')) {
-                    showNotification('Trilha completa! Revise as lições quando quiser.', 'info');
-                } else {
-                    showTrailDetails(trailTitle);
-                }
+            if (moduleName) {
+                showTrilhasView(moduleName, trailTitle);
+                return;
             }
-        });
-    });
 
-    // Close tooltips when clicking outside on mobile
-    document.addEventListener('click', (e) => {
-        const isMobile = window.innerWidth <= 768;
-        if (isMobile && !e.target.closest('.trail-card')) {
-            trailCards.forEach(card => {
-                card.classList.remove('show-tooltip');
-            });
-        }
+            if (trilhaId) {
+                showTrailDetailView(trilhaId, trailTitle);
+                return;
+            }
+
+            showNotification(`Explorando ${trailTitle}...`, 'info');
+        });
     });
 }
 
@@ -333,7 +303,7 @@ function showAchievementDetails(achievementName) {
 
 // ===== Progress Bar Animations =====
 function animateProgressBars() {
-    const progressBars = document.querySelectorAll('.progress-fill, .goal-progress-fill, .progress-fill-small');
+    const progressBars = document.querySelectorAll('.progress-fill, .goal-progress-fill, .progress-fill-small, .trail-mini-progress-fill');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -531,7 +501,7 @@ function debounce(func, wait) {
 // ===== Welcome Animation =====
 function playWelcomeAnimation() {
     const header = document.querySelector('.home-header');
-    const trailItems = document.querySelectorAll('.trail-item');
+    const trailItems = document.querySelectorAll('.trail-step, .trilha-step');
 
     // Fade in header
     header.style.opacity = '0';
@@ -672,71 +642,50 @@ function loadTrilhasForModule(moduleName) {
 
     // Clear existing trilhas
     trilhasGrid.innerHTML = '';
+    trilhasGrid.classList.add('trail-map');
 
     // Generate trilha cards
-    trilhas.forEach(trilha => {
-        const card = createTrilhaCard(trilha);
+    trilhas.forEach((trilha, index) => {
+        const card = createTrilhaCard(trilha, index);
         trilhasGrid.appendChild(card);
     });
 }
 
-function createTrilhaCard(trilha) {
+function createTrilhaCard(trilha, index = 0) {
     const card = document.createElement('div');
     const statusClass = trilha.completed ? 'completed' :
                        trilha.active ? 'active' :
                        trilha.locked ? 'locked' : 'available';
+    const alignmentClass = index % 2 === 0 ? 'align-left' : 'align-right';
 
-    card.className = `trilha-card ${statusClass}`;
+    card.className = `trilha-step ${statusClass} ${alignmentClass}`;
     card.setAttribute('data-trilha', trilha.id);
 
-    // Build icon wrapper
-    let iconHtml = `
-        <div class="trilha-icon-wrapper">
-            <img src="${trilha.icon}" alt="${trilha.title}" class="trilha-icon">
-    `;
-
-    if (trilha.active) {
-        iconHtml += '<div class="trilha-pulse"></div>';
-    }
-
-    if (trilha.completed) {
-        iconHtml += `
-            <div class="trilha-completion-check">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="11" fill="#a9ff71" stroke="#27275e" stroke-width="2"/>
-                    <path d="M7 12l3 3 7-7" stroke="#27275e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+    const completedLessons = trilha.locked ? 0 : Math.floor((trilha.progress / 100) * trilha.lessons);
+    const progressLabel = trilha.locked ? 'Bloqueado' : `${completedLessons}/${trilha.lessons} lições`;
+    const badgeClass = trilha.locked ? 'locked' : (!trilha.active && !trilha.completed ? 'neutral' : '');
+    const badgeText = trilha.completed ? 'Concluída' : trilha.active ? 'Em curso' : trilha.locked ? 'Bloqueada' : 'Pronta';
+    const progressBar = trilha.locked
+        ? '<div class="trail-mini-progress-bar muted"></div>'
+        : `
+            <div class="trail-mini-progress-bar">
+                <div class="trail-mini-progress-fill" style="width: ${trilha.progress}%"></div>
             </div>
         `;
-    }
-
-    iconHtml += '</div>';
-
-    // Build progress section
-    let progressHtml = '';
-    if (trilha.locked) {
-        progressHtml = `
-            <div class="trilha-progress">
-                <span class="trilha-progress-text locked-text">Bloqueado</span>
-            </div>
-        `;
-    } else {
-        const completedLessons = Math.floor((trilha.progress / 100) * trilha.lessons);
-        progressHtml = `
-            <div class="trilha-progress">
-                <div class="trilha-progress-bar">
-                    <div class="trilha-progress-fill" style="width: ${trilha.progress}%"></div>
-                </div>
-                <span class="trilha-progress-text">${completedLessons}/${trilha.lessons} lições completas</span>
-            </div>
-        `;
-    }
 
     card.innerHTML = `
-        ${iconHtml}
-        <h3 class="trilha-title-text">${trilha.title}</h3>
-        <p class="trilha-description">${trilha.description}</p>
-        ${progressHtml}
+        <div class="trail-node">
+            <img src="${trilha.icon}" alt="${trilha.title}" class="trail-icon">
+            <span class="trail-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="trail-info">
+            <h3 class="trilha-step-title">${trilha.title}</h3>
+            <p class="trilha-step-description">${trilha.description}</p>
+            <div class="trail-mini-progress">
+                ${progressBar}
+                <span class="trail-mini-progress-text ${trilha.locked ? 'locked-text' : ''}">${progressLabel}</span>
+            </div>
+        </div>
     `;
 
     // Add click handler
@@ -747,17 +696,6 @@ function createTrilhaCard(trilha) {
         }
         showTrailDetailView(trilha.id, trilha.title);
     });
-
-    // Add hover effect for non-locked cards
-    if (!trilha.locked) {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1)';
-        });
-    }
 
     return card;
 }
