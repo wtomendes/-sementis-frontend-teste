@@ -240,148 +240,80 @@
             <section class="learning-trails">
                 <h2 class="section-title">Trilhas de Aprendizado</h2>
 
-                <div class="trail-map-container">
-                    <!-- SVG Path Background -->
-                    <svg class="trail-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <!-- Completed path segments (green) -->
-                        <path class="svg-path completed-path"
-                              d="M 10 8 Q 30 5, 50 10 T 80 22"
-                              fill="none" stroke="url(#gradient-completed)" stroke-width="0.6" stroke-dasharray="1.5 1"/>
-
-                        <!-- Active path segment (green to accent) -->
-                        <path class="svg-path active-path"
-                              d="M 80 22 Q 70 30, 60 35 T 45 45"
-                              fill="none" stroke="url(#gradient-active)" stroke-width="0.6" stroke-dasharray="1.5 1"/>
-
-                        <!-- Locked path segments (gray) -->
-                        <path class="svg-path locked-path"
-                              d="M 45 45 Q 35 52, 30 65 Q 40 75, 50 78 T 65 82"
-                              fill="none" stroke="url(#gradient-locked)" stroke-width="0.6" stroke-dasharray="1.5 1" opacity="0.4"/>
-
-                        <!-- Gradients -->
-                        <defs>
-                            <linearGradient id="gradient-completed" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
-                            </linearGradient>
-                            <linearGradient id="gradient-active" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#a9ff71;stop-opacity:1" />
-                            </linearGradient>
-                            <linearGradient id="gradient-locked" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#4a4a6a;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#3a3a5a;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-
-                    <!-- Trail Nodes -->
-                    <div class="trail-nodes-wrapper">
-                        <!-- Node 1 - Básico (Completed) -->
-                        <div class="trail-node-item completed" data-position="1" style="--node-x: 10%; --node-y: 8%;">
-                            <div class="node-circle">
-                                <div class="node-icon-wrapper">
-                                    <img src="assets/tarefas/tarefa_basico1.png" alt="Básico" class="node-icon">
-                                    <div class="completion-check">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                            <circle cx="12" cy="12" r="11" fill="#a9ff71" stroke="#27275e" stroke-width="2"/>
-                                            <path d="M7 12l3 3 7-7" stroke="#27275e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="node-tooltip">
-                                <h3>Fundamentos</h3>
-                                <p>Conceitos básicos de sustentabilidade</p>
-                                <div class="node-progress">
-                                    <span class="progress-text">5/5 lições completas</span>
-                                </div>
+                <div class="trails-grid">
+                    <!-- Trail 1: Básico (Completed) -->
+                    <div class="trail-card completed" data-trail="basico">
+                        <div class="trail-icon-wrapper">
+                            <img src="assets/tarefas/tarefa_basico1.png" alt="Básico" class="trail-icon">
+                            <div class="completion-check">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="11" fill="#a9ff71" stroke="#27275e" stroke-width="2"/>
+                                    <path d="M7 12l3 3 7-7" stroke="#27275e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </div>
                         </div>
-
-                        <!-- Node 2 - Água (Active/In Progress) -->
-                        <div class="trail-node-item active" data-position="2" style="--node-x: 80%; --node-y: 22%;">
-                            <div class="node-circle pulse-node">
-                                <div class="pulse-ring"></div>
-                                <div class="pulse-ring-2"></div>
-                                <div class="node-icon-wrapper">
-                                    <img src="assets/tarefas/tarefa_agua.png" alt="Água" class="node-icon">
-                                </div>
+                        <h3 class="trail-title">Fundamentos</h3>
+                        <p class="trail-description">Conceitos básicos de sustentabilidade</p>
+                        <div class="trail-progress">
+                            <div class="trail-progress-bar">
+                                <div class="trail-progress-fill" style="width: 100%"></div>
                             </div>
-                            <div class="node-tooltip">
-                                <h3>Água e Vida</h3>
-                                <p>Conservação e uso consciente da água</p>
-                                <div class="node-progress">
-                                    <div class="mini-progress-bar">
-                                        <div class="mini-progress-fill" style="width: 60%"></div>
-                                    </div>
-                                    <span class="progress-text">3/5 lições</span>
-                                </div>
-                                <button class="node-btn btn-continue">Continuar</button>
-                            </div>
+                            <span class="trail-progress-text">5/5 lições completas</span>
                         </div>
+                    </div>
 
-                        <!-- Node 3 - Clima (Available) -->
-                        <div class="trail-node-item available" data-position="3" style="--node-x: 45%; --node-y: 45%;">
-                            <div class="node-circle">
-                                <div class="node-icon-wrapper">
-                                    <img src="assets/tarefas/tarefa_clima.png" alt="Clima" class="node-icon">
-                                </div>
-                            </div>
-                            <div class="node-tooltip">
-                                <h3>Mudanças Climáticas</h3>
-                                <p>Entenda o aquecimento global</p>
-                                <div class="node-progress">
-                                    <span class="progress-text">0/5 lições</span>
-                                </div>
-                                <button class="node-btn btn-start">Começar</button>
-                            </div>
+                    <!-- Trail 2: Água (Active/In Progress) -->
+                    <div class="trail-card active" data-trail="agua">
+                        <div class="trail-icon-wrapper">
+                            <img src="assets/tarefas/tarefa_agua.png" alt="Água" class="trail-icon">
+                            <div class="trail-pulse"></div>
                         </div>
-
-                        <!-- Node 4 - Consumo (Locked) -->
-                        <div class="trail-node-item locked" data-position="4" style="--node-x: 30%; --node-y: 65%;">
-                            <div class="node-circle">
-                                <div class="node-icon-wrapper">
-                                    <div class="lock-overlay">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                            <circle cx="12" cy="12" r="11" fill="#4a4a6a" stroke="#3a3a5a" stroke-width="2"/>
-                                            <path d="M7 11V7a5 5 0 0110 0v4m-8 0h6a2 2 0 012 2v5a2 2 0 01-2 2H9a2 2 0 01-2-2v-5a2 2 0 012-2z"
-                                                  stroke="#8a8a9a" stroke-width="1.5" stroke-linecap="round"/>
-                                        </svg>
-                                    </div>
-                                    <img src="assets/tarefas/tarefa_consumo_consciente.png" alt="Consumo" class="node-icon locked-icon">
-                                </div>
+                        <h3 class="trail-title">Água e Vida</h3>
+                        <p class="trail-description">Conservação e uso consciente da água</p>
+                        <div class="trail-progress">
+                            <div class="trail-progress-bar">
+                                <div class="trail-progress-fill" style="width: 60%"></div>
                             </div>
-                            <div class="node-tooltip">
-                                <h3>Consumo Consciente</h3>
-                                <p>Aprenda a consumir com responsabilidade</p>
-                                <div class="node-progress">
-                                    <span class="progress-text locked-text">Bloqueado</span>
-                                </div>
-                            </div>
+                            <span class="trail-progress-text">3/5 lições completas</span>
                         </div>
+                    </div>
 
-                        <!-- Node 5 - Horta (Locked) -->
-                        <div class="trail-node-item locked" data-position="5" style="--node-x: 65%; --node-y: 82%;">
-                            <div class="node-circle">
-                                <div class="node-icon-wrapper">
-                                    <div class="lock-overlay">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                                            <circle cx="12" cy="12" r="11" fill="#4a4a6a" stroke="#3a3a5a" stroke-width="2"/>
-                                            <path d="M7 11V7a5 5 0 0110 0v4m-8 0h6a2 2 0 012 2v5a2 2 0 01-2 2H9a2 2 0 01-2-2v-5a2 2 0 012-2z"
-                                                  stroke="#8a8a9a" stroke-width="1.5" stroke-linecap="round"/>
-                                        </svg>
-                                    </div>
-                                    <img src="assets/tarefas/tarefa_horta.png" alt="Horta" class="node-icon locked-icon">
-                                </div>
+                    <!-- Trail 3: Clima (Available) -->
+                    <div class="trail-card available" data-trail="clima">
+                        <div class="trail-icon-wrapper">
+                            <img src="assets/tarefas/tarefa_clima.png" alt="Clima" class="trail-icon">
+                        </div>
+                        <h3 class="trail-title">Mudanças Climáticas</h3>
+                        <p class="trail-description">Entenda o aquecimento global</p>
+                        <div class="trail-progress">
+                            <div class="trail-progress-bar">
+                                <div class="trail-progress-fill" style="width: 0%"></div>
                             </div>
-                            <div class="node-tooltip">
-                                <h3>Horta Sustentável</h3>
-                                <p>Cultive seu próprio alimento</p>
-                                <div class="node-progress">
-                                    <span class="progress-text locked-text">Bloqueado</span>
-                                </div>
-                            </div>
+                            <span class="trail-progress-text">0/5 lições completas</span>
+                        </div>
+                    </div>
+
+                    <!-- Trail 4: Consumo (Locked) -->
+                    <div class="trail-card locked" data-trail="consumo">
+                        <div class="trail-icon-wrapper">
+                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="trail-icon">
+                        </div>
+                        <h3 class="trail-title">Consumo Consciente</h3>
+                        <p class="trail-description">Aprenda a consumir com responsabilidade</p>
+                        <div class="trail-progress">
+                            <span class="trail-progress-text locked-text">Bloqueado</span>
+                        </div>
+                    </div>
+
+                    <!-- Trail 5: Horta (Locked) -->
+                    <div class="trail-card locked" data-trail="horta">
+                        <div class="trail-icon-wrapper">
+                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="trail-icon">
+                        </div>
+                        <h3 class="trail-title">Horta Sustentável</h3>
+                        <p class="trail-description">Cultive seu próprio alimento</p>
+                        <div class="trail-progress">
+                            <span class="trail-progress-text locked-text">Bloqueado</span>
                         </div>
                     </div>
                 </div>
