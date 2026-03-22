@@ -1,131 +1,8 @@
 // ===== Home Page JavaScript =====
 
 // View management state
-let currentView = 'modules'; // 'home', 'modules', 'trilhas', 'trail-detail'
+let currentView = 'modules'; // 'home', 'modules'
 let currentModule = null;
-let currentTrilha = null;
-
-// Define trilhas data for each module
-const moduleTrilhasData = {
-    'basico': [
-        {
-            id: 'basico-introducao',
-            title: 'Introdução à Sustentabilidade',
-            description: 'Conceitos básicos e fundamentos',
-            icon: 'assets/tarefas/tarefa_basico1.png',
-            progress: 100,
-            completed: true,
-            lessons: 5
-        },
-        {
-            id: 'basico-meio-ambiente',
-            title: 'Meio Ambiente',
-            description: 'Entendendo nosso planeta',
-            icon: 'assets/tarefas/tarefa_basico1.png',
-            progress: 100,
-            completed: true,
-            lessons: 5
-        },
-        {
-            id: 'basico-acoes',
-            title: 'Ações Sustentáveis',
-            description: 'Práticas do dia a dia',
-            icon: 'assets/tarefas/tarefa_basico1.png',
-            progress: 100,
-            completed: true,
-            lessons: 5
-        }
-    ],
-    'agua': [
-        {
-            id: 'agua-importancia',
-            title: 'Importância da Água',
-            description: 'Por que a água é essencial',
-            icon: 'assets/tarefas/tarefa_agua.png',
-            progress: 100,
-            completed: true,
-            lessons: 5
-        },
-        {
-            id: 'agua-ciclo',
-            title: 'Ciclo da Água',
-            description: 'Como a água circula',
-            icon: 'assets/tarefas/tarefa_agua.png',
-            progress: 100,
-            completed: true,
-            lessons: 5
-        },
-        {
-            id: 'agua-conservacao',
-            title: 'Conservação',
-            description: 'Uso consciente da água',
-            icon: 'assets/tarefas/tarefa_agua.png',
-            progress: 60,
-            active: true,
-            lessons: 5
-        },
-        {
-            id: 'agua-poluicao',
-            title: 'Poluição da Água',
-            description: 'Problemas e soluções',
-            icon: 'assets/tarefas/tarefa_agua.png',
-            progress: 0,
-            available: true,
-            lessons: 5
-        }
-    ],
-    'clima': [
-        {
-            id: 'clima-introducao',
-            title: 'Introdução ao Clima',
-            description: 'O que é mudança climática',
-            icon: 'assets/tarefas/tarefa_clima.png',
-            progress: 0,
-            available: true,
-            lessons: 5
-        },
-        {
-            id: 'clima-aquecimento',
-            title: 'Aquecimento Global',
-            description: 'Causas e consequências',
-            icon: 'assets/tarefas/tarefa_clima.png',
-            progress: 0,
-            locked: true,
-            lessons: 5
-        },
-        {
-            id: 'clima-acoes',
-            title: 'Ações Climáticas',
-            description: 'Como podemos ajudar',
-            icon: 'assets/tarefas/tarefa_clima.png',
-            progress: 0,
-            locked: true,
-            lessons: 5
-        }
-    ],
-    'consumo': [
-        {
-            id: 'consumo-introducao',
-            title: 'Consumo Consciente',
-            description: 'O que é consumo responsável',
-            icon: 'assets/tarefas/tarefa_consumo_consciente.png',
-            progress: 0,
-            locked: true,
-            lessons: 5
-        }
-    ],
-    'horta': [
-        {
-            id: 'horta-introducao',
-            title: 'Horta em Casa',
-            description: 'Começando sua horta',
-            icon: 'assets/tarefas/tarefa_horta.png',
-            progress: 0,
-            locked: true,
-            lessons: 5
-        }
-    ]
-};
 
 document.addEventListener('DOMContentLoaded', () => {
     initBottomNav();
@@ -134,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initAchievements();
     animateProgressBars();
     initModulesView();
-    initTrailDetailView();
 });
 
 // ===== Bottom Navigation =====
@@ -566,139 +442,9 @@ function showModulesView() {
     console.log('Showing modules view');
 }
 
-function showTrilhasView(moduleName, moduleTitle) {
-    currentView = 'trilhas';
-    currentModule = moduleName;
-
-    // Hide other views
-    document.querySelector('.content-wrapper').style.display = 'none';
-    document.querySelector('.modules-view').style.display = 'none';
-    document.querySelector('.trail-detail-view').style.display = 'none';
-
-    // Show trilhas view
-    document.querySelector('.trilhas-view').style.display = 'block';
-
-    // Update title
-    if (moduleTitle) {
-        document.getElementById('trilhasTitle').textContent = moduleTitle;
-    }
-
-    // Load trilhas for this module
-    loadTrilhasForModule(moduleName);
-
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    console.log('Showing trilhas view for module:', moduleName);
-}
-
-function showTrailDetailView(trilhaId, trilhaTitle) {
-    currentView = 'trail-detail';
-    currentTrilha = trilhaId;
-
-    // Hide other views
-    document.querySelector('.content-wrapper').style.display = 'none';
-    document.querySelector('.modules-view').style.display = 'none';
-    document.querySelector('.trilhas-view').style.display = 'none';
-
-    // Show trail detail view
-    document.querySelector('.trail-detail-view').style.display = 'block';
-
-    // Update trail title
-    if (trilhaTitle) {
-        document.getElementById('trailDetailTitle').textContent = trilhaTitle;
-    }
-
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    console.log('Showing trail detail for:', trilhaId);
-}
-
 // Make functions globally accessible
 window.showHomeView = showHomeView;
 window.showModulesView = showModulesView;
-window.showTrilhasView = showTrilhasView;
-window.showTrailDetailView = showTrailDetailView;
-
-// Helper function to go back from trail detail to trilhas view
-function goBackFromTrailDetail() {
-    if (currentModule) {
-        // Get module title from the modules view
-        const moduleCard = document.querySelector(`.module-card[data-module="${currentModule}"]`);
-        const moduleTitle = moduleCard ? moduleCard.querySelector('.module-title').textContent : '';
-        showTrilhasView(currentModule, moduleTitle);
-    } else {
-        showModulesView();
-    }
-}
-
-window.goBackFromTrailDetail = goBackFromTrailDetail;
-
-// ===== Load Trilhas for Module =====
-function loadTrilhasForModule(moduleName) {
-    const trilhasGrid = document.getElementById('trilhasGrid');
-    const trilhas = moduleTrilhasData[moduleName] || [];
-
-    // Clear existing trilhas
-    trilhasGrid.innerHTML = '';
-    trilhasGrid.classList.add('trail-map');
-
-    // Generate trilha cards
-    trilhas.forEach((trilha, index) => {
-        const card = createTrilhaCard(trilha, index);
-        trilhasGrid.appendChild(card);
-    });
-}
-
-function createTrilhaCard(trilha, index = 0) {
-    const card = document.createElement('div');
-    const statusClass = trilha.completed ? 'completed' :
-                       trilha.active ? 'active' :
-                       trilha.locked ? 'locked' : 'available';
-    const alignmentClass = index % 2 === 0 ? 'align-left' : 'align-right';
-
-    card.className = `trilha-step ${statusClass} ${alignmentClass}`;
-    card.setAttribute('data-trilha', trilha.id);
-
-    const completedLessons = trilha.locked ? 0 : Math.floor((trilha.progress / 100) * trilha.lessons);
-    const progressLabel = trilha.locked ? 'Bloqueado' : `${completedLessons}/${trilha.lessons} lições`;
-    const badgeClass = trilha.locked ? 'locked' : (!trilha.active && !trilha.completed ? 'neutral' : '');
-    const badgeText = trilha.completed ? 'Concluída' : trilha.active ? 'Em curso' : trilha.locked ? 'Bloqueada' : 'Pronta';
-    const progressBar = trilha.locked
-        ? '<div class="trail-mini-progress-bar muted"></div>'
-        : `
-            <div class="trail-mini-progress-bar">
-                <div class="trail-mini-progress-fill" style="width: ${trilha.progress}%"></div>
-            </div>
-        `;
-
-    card.innerHTML = `
-        <div class="trail-node">
-            <img src="${trilha.icon}" alt="${trilha.title}" class="trail-icon">
-            <span class="trail-badge ${badgeClass}">${badgeText}</span>
-        </div>
-        <div class="trail-info">
-            <h3 class="trilha-step-title">${trilha.title}</h3>
-            <p class="trilha-step-description">${trilha.description}</p>
-            <div class="trail-mini-progress">
-                ${progressBar}
-                <span class="trail-mini-progress-text ${trilha.locked ? 'locked-text' : ''}">${progressLabel}</span>
-            </div>
-        </div>
-    `;
-
-    // Add click handler
-    card.addEventListener('click', () => {
-        if (trilha.locked) {
-            showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
-            return;
-        }
-        showTrailDetailView(trilha.id, trilha.title);
-    });
-
-    return card;
-}
 
 // ===== Modules View Initialization =====
 function initModulesView() {
@@ -712,11 +458,8 @@ function initModulesView() {
                 return;
             }
 
-            const moduleName = card.getAttribute('data-module');
-            const moduleTitle = card.querySelector('.module-title').textContent;
-
-            // Show trilhas view for this module
-            showTrilhasView(moduleName, moduleTitle);
+            // Redirect to trilha (1).html
+            window.location.href = 'trilha (1).html';
         });
 
         // Add hover effect for non-locked cards
@@ -732,58 +475,3 @@ function initModulesView() {
     });
 }
 
-// ===== Trail Detail View Initialization =====
-function initTrailDetailView() {
-    // Initialize lesson buttons
-    const continueButtons = document.querySelectorAll('.btn-lesson-continue');
-    const startButtons = document.querySelectorAll('.btn-lesson-start');
-
-    continueButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            handleLessonClick('continue');
-        });
-    });
-
-    startButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            handleLessonClick('start');
-        });
-    });
-
-    // Add click handlers to lesson items
-    const lessonItems = document.querySelectorAll('.lesson-item');
-    lessonItems.forEach(item => {
-        if (!item.classList.contains('locked')) {
-            item.style.cursor = 'pointer';
-            item.addEventListener('click', () => {
-                if (item.classList.contains('completed')) {
-                    showNotification('Lição já concluída! Revise quando quiser.', 'info');
-                } else if (item.classList.contains('active')) {
-                    handleLessonClick('continue');
-                } else if (item.classList.contains('available')) {
-                    handleLessonClick('start');
-                }
-            });
-        } else {
-            item.addEventListener('click', () => {
-                showNotification('Complete as lições anteriores para desbloquear!', 'info');
-            });
-        }
-    });
-}
-
-function handleLessonClick(action) {
-    const message = action === 'continue' ?
-        'Continuando lição...' :
-        'Iniciando lição...';
-
-    showNotification(message, 'success');
-
-    // Simulate loading lesson
-    setTimeout(() => {
-        console.log('Load lesson:', action);
-        // window.location.href = 'lesson.html?module=' + currentModule;
-    }, 500);
-}
