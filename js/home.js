@@ -64,57 +64,38 @@ function handleNavigation(section) {
 
 // ===== Trail Interactions =====
 function initTrailInteractions() {
-    const trailNodeItems = document.querySelectorAll('.trail-node-item');
-    let lastTappedNode = null;
+    const trailCards = document.querySelectorAll('.trail-card');
+    let lastTappedCard = null;
 
-    trailNodeItems.forEach(item => {
-        const continueBtn = item.querySelector('.btn-continue');
-        const startBtn = item.querySelector('.btn-start');
-        const trailTitle = item.querySelector('.node-tooltip h3').textContent;
+    trailCards.forEach(card => {
+        const trailTitle = card.querySelector('.trail-title').textContent;
 
-        if (continueBtn) {
-            continueBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                handleContinueTrail(trailTitle);
-            });
-        }
-
-        if (startBtn) {
-            startBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                handleStartTrail(trailTitle);
-            });
-        }
-
-        // Mobile tap behavior: First tap shows tooltip, second tap navigates
-        let tapCount = 0;
-        let tapTimer = null;
-
-        item.addEventListener('click', (e) => {
+        // Click handler for trail cards
+        card.addEventListener('click', (e) => {
             const isMobile = window.innerWidth <= 768;
 
-            if (item.classList.contains('locked')) {
+            if (card.classList.contains('locked')) {
                 showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
                 return;
             }
 
             if (isMobile) {
                 // Mobile: First tap shows tooltip, second tap within 3s navigates
-                if (lastTappedNode && lastTappedNode !== item) {
-                    lastTappedNode.classList.remove('show-tooltip');
+                if (lastTappedCard && lastTappedCard !== card) {
+                    lastTappedCard.classList.remove('show-tooltip');
                 }
 
-                if (!item.classList.contains('show-tooltip')) {
-                    item.classList.add('show-tooltip');
-                    lastTappedNode = item;
+                if (!card.classList.contains('show-tooltip')) {
+                    card.classList.add('show-tooltip');
+                    lastTappedCard = card;
 
                     // Auto-hide tooltip after 5 seconds
                     setTimeout(() => {
-                        item.classList.remove('show-tooltip');
+                        card.classList.remove('show-tooltip');
                     }, 5000);
                 } else {
                     // Second tap - navigate
-                    if (item.classList.contains('completed')) {
+                    if (card.classList.contains('completed')) {
                         showNotification('Trilha completa! Revise as lições quando quiser.', 'info');
                     } else {
                         showTrailDetails(trailTitle);
@@ -122,34 +103,21 @@ function initTrailInteractions() {
                 }
             } else {
                 // Desktop: Click to navigate immediately
-                if (item.classList.contains('completed')) {
-                    showNotification('Trilha completa! Clique em "Continuar" para revisar.', 'info');
+                if (card.classList.contains('completed')) {
+                    showNotification('Trilha completa! Revise as lições quando quiser.', 'info');
                 } else {
                     showTrailDetails(trailTitle);
                 }
             }
         });
-
-        // Add hover animation effect for desktop
-        if (!item.classList.contains('locked')) {
-            item.addEventListener('mouseenter', () => {
-                const nodeCircle = item.querySelector('.node-circle');
-                nodeCircle.style.transform = 'scale(1.08)';
-            });
-
-            item.addEventListener('mouseleave', () => {
-                const nodeCircle = item.querySelector('.node-circle');
-                nodeCircle.style.transform = 'scale(1)';
-            });
-        }
     });
 
     // Close tooltips when clicking outside on mobile
     document.addEventListener('click', (e) => {
         const isMobile = window.innerWidth <= 768;
-        if (isMobile && !e.target.closest('.trail-node-item')) {
-            trailNodeItems.forEach(item => {
-                item.classList.remove('show-tooltip');
+        if (isMobile && !e.target.closest('.trail-card')) {
+            trailCards.forEach(card => {
+                card.classList.remove('show-tooltip');
             });
         }
     });
