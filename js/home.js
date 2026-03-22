@@ -64,16 +64,16 @@ function handleNavigation(section) {
 
 // ===== Trail Interactions =====
 function initTrailInteractions() {
-    const trailItems = document.querySelectorAll('.trail-item');
+    const trailNodeItems = document.querySelectorAll('.trail-node-item');
 
-    trailItems.forEach(item => {
+    trailNodeItems.forEach(item => {
         const continueBtn = item.querySelector('.btn-continue');
         const startBtn = item.querySelector('.btn-start');
+        const trailTitle = item.querySelector('.node-tooltip h3').textContent;
 
         if (continueBtn) {
             continueBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const trailTitle = item.querySelector('.trail-title').textContent;
                 handleContinueTrail(trailTitle);
             });
         }
@@ -81,17 +81,36 @@ function initTrailInteractions() {
         if (startBtn) {
             startBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const trailTitle = item.querySelector('.trail-title').textContent;
                 handleStartTrail(trailTitle);
             });
         }
 
-        // Add click to entire trail item for unlocked/active trails
+        // Add click to entire node for unlocked/active/completed nodes
         if (!item.classList.contains('locked')) {
             item.style.cursor = 'pointer';
             item.addEventListener('click', () => {
-                const trailTitle = item.querySelector('.trail-title').textContent;
-                showTrailDetails(trailTitle);
+                if (item.classList.contains('completed')) {
+                    showNotification('Trilha completa! Clique em "Continuar" para revisar.', 'info');
+                } else {
+                    showTrailDetails(trailTitle);
+                }
+            });
+        } else {
+            item.addEventListener('click', () => {
+                showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
+            });
+        }
+
+        // Add hover animation effect
+        if (!item.classList.contains('locked')) {
+            item.addEventListener('mouseenter', () => {
+                const nodeCircle = item.querySelector('.node-circle');
+                nodeCircle.style.transform = 'scale(1.08)';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                const nodeCircle = item.querySelector('.node-circle');
+                nodeCircle.style.transform = 'scale(1)';
             });
         }
     });
