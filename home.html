@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sementis - Trilhas de Aprendizado</title>
+    <title>Sementis</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -51,191 +51,6 @@
 
     <!-- Main Content -->
     <main class="home-content">
-        <!-- Modules View (shown when clicking Trilhas) -->
-        <div class="modules-view" style="display: none;">
-            <div class="modules-header">
-                <button class="back-btn" onclick="showHomeView()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <h1 class="modules-title">Escolha um Módulo</h1>
-            </div>
-            <div class="modules-grid">
-                <!-- Module 1: Básico -->
-                <div class="module-card" data-module="basico">
-                    <div class="module-icon-wrapper">
-                        <img src="assets/tarefas/tarefa_basico1.png" alt="Básico" class="module-icon">
-                    </div>
-                    <h3 class="module-title">Fundamentos</h3>
-                    <p class="module-description">Conceitos básicos de sustentabilidade</p>
-                    <div class="module-progress">
-                        <div class="module-progress-bar">
-                            <div class="module-progress-fill" style="width: 100%"></div>
-                        </div>
-                        <span class="module-progress-text">5/5 lições completas</span>
-                    </div>
-                </div>
-
-                <!-- Module 2: Água -->
-                <div class="module-card active" data-module="agua">
-                    <div class="module-icon-wrapper">
-                        <img src="assets/tarefas/tarefa_agua.png" alt="Água" class="module-icon">
-                        <div class="module-pulse"></div>
-                    </div>
-                    <h3 class="module-title">Água e Vida</h3>
-                    <p class="module-description">Conservação e uso consciente da água</p>
-                    <div class="module-progress">
-                        <div class="module-progress-bar">
-                            <div class="module-progress-fill" style="width: 60%"></div>
-                        </div>
-                        <span class="module-progress-text">3/5 lições completas</span>
-                    </div>
-                </div>
-
-                <!-- Module 3: Clima -->
-                <div class="module-card" data-module="clima">
-                    <div class="module-icon-wrapper">
-                        <img src="assets/tarefas/tarefa_clima.png" alt="Clima" class="module-icon">
-                    </div>
-                    <h3 class="module-title">Mudanças Climáticas</h3>
-                    <p class="module-description">Entenda o aquecimento global</p>
-                    <div class="module-progress">
-                        <div class="module-progress-bar">
-                            <div class="module-progress-fill" style="width: 0%"></div>
-                        </div>
-                        <span class="module-progress-text">0/5 lições completas</span>
-                    </div>
-                </div>
-
-                <!-- Module 4: Consumo Consciente -->
-                <div class="module-card locked" data-module="consumo">
-                    <div class="module-icon-wrapper">
-                        <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="module-icon">
-                    </div>
-                    <h3 class="module-title">Consumo Consciente</h3>
-                    <p class="module-description">Aprenda a consumir com responsabilidade</p>
-                    <div class="module-progress">
-                        <span class="module-progress-text locked-text">Bloqueado</span>
-                    </div>
-                </div>
-
-                <!-- Module 5: Horta -->
-                <div class="module-card locked" data-module="horta">
-                    <div class="module-icon-wrapper">
-                        <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueado" class="module-icon">
-                    </div>
-                    <h3 class="module-title">Horta Sustentável</h3>
-                    <p class="module-description">Cultive seu próprio alimento</p>
-                    <div class="module-progress">
-                        <span class="module-progress-text locked-text">Bloqueado</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Trilhas View (shown when clicking a module) -->
-        <div class="trilhas-view" style="display: none;">
-            <div class="trilhas-header">
-                <button class="back-btn" onclick="showModulesView()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <h1 class="trilhas-title" id="trilhasTitle">Água e Vida</h1>
-            </div>
-            <p class="trilhas-subtitle">Escolha uma trilha de aprendizado</p>
-
-            <div class="trilhas-grid" id="trilhasGrid">
-                <!-- Trilhas will be dynamically loaded here based on the selected module -->
-            </div>
-        </div>
-
-        <!-- Trail Detail View (shown when clicking a trilha) -->
-        <div class="trail-detail-view" style="display: none;">
-            <div class="trail-detail-header">
-                <button class="back-btn" onclick="goBackFromTrailDetail()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <h1 class="trail-detail-title" id="trailDetailTitle">Água e Vida</h1>
-            </div>
-
-            <div class="trail-detail-content">
-                <div class="trail-path-vertical">
-                    <!-- Lesson 1 - Completed -->
-                    <div class="lesson-item completed">
-                        <div class="lesson-node">
-                            <img src="assets/tarefas/tarefa_concluida.png" alt="Concluída" class="lesson-icon">
-                        </div>
-                        <div class="lesson-info">
-                            <h3 class="lesson-title">Introdução à Água</h3>
-                            <p class="lesson-description">A importância da água para a vida</p>
-                            <span class="lesson-xp">+10 XP</span>
-                        </div>
-                    </div>
-
-                    <div class="lesson-connector"></div>
-
-                    <!-- Lesson 2 - Completed -->
-                    <div class="lesson-item completed">
-                        <div class="lesson-node">
-                            <img src="assets/tarefas/tarefa_concluida.png" alt="Concluída" class="lesson-icon">
-                        </div>
-                        <div class="lesson-info">
-                            <h3 class="lesson-title">Ciclo da Água</h3>
-                            <p class="lesson-description">Como a água circula no planeta</p>
-                            <span class="lesson-xp">+10 XP</span>
-                        </div>
-                    </div>
-
-                    <div class="lesson-connector"></div>
-
-                    <!-- Lesson 3 - Active -->
-                    <div class="lesson-item active">
-                        <div class="lesson-node pulse">
-                            <img src="assets/tarefas/tarefa_agua.png" alt="Atual" class="lesson-icon">
-                            <div class="lesson-pulse-ring"></div>
-                        </div>
-                        <div class="lesson-info">
-                            <h3 class="lesson-title">Poluição da Água</h3>
-                            <p class="lesson-description">Entenda os principais poluentes</p>
-                            <button class="btn-lesson-continue">Continuar</button>
-                        </div>
-                    </div>
-
-                    <div class="lesson-connector"></div>
-
-                    <!-- Lesson 4 - Available -->
-                    <div class="lesson-item available">
-                        <div class="lesson-node">
-                            <img src="assets/tarefas/tarefa_agua.png" alt="Disponível" class="lesson-icon">
-                        </div>
-                        <div class="lesson-info">
-                            <h3 class="lesson-title">Economia de Água</h3>
-                            <p class="lesson-description">Dicas práticas para economizar</p>
-                            <button class="btn-lesson-start">Começar</button>
-                        </div>
-                    </div>
-
-                    <div class="lesson-connector locked"></div>
-
-                    <!-- Lesson 5 - Locked -->
-                    <div class="lesson-item locked">
-                        <div class="lesson-node">
-                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Bloqueada" class="lesson-icon">
-                        </div>
-                        <div class="lesson-info">
-                            <h3 class="lesson-title">Quiz Final</h3>
-                            <p class="lesson-description">Teste seus conhecimentos</p>
-                            <span class="lesson-locked">Bloqueada</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Home/Default View -->
         <div class="content-wrapper">
             <section class="daily-goal">
@@ -249,104 +64,6 @@
                                 <div class="goal-progress-fill" style="width: 33%"></div>
                             </div>
                             <span class="goal-count">1/3</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="learning-trails">
-                <div class="trails-header">
-                    <div>
-                        <h2 class="section-title">Trilhas de Aprendizado</h2>
-                        <p class="trail-map-subtitle">Percorra o caminho gamificado inspirado no Duolingo, usando os ícones e cores do Sementis.</p>
-                    </div>
-                    <div class="trail-legend">
-                        <span class="legend-item"><span class="legend-dot completed"></span>Concluída</span>
-                        <span class="legend-item"><span class="legend-dot active"></span>Em progresso</span>
-                        <span class="legend-item"><span class="legend-dot available"></span>Disponível</span>
-                        <span class="legend-item"><span class="legend-dot locked"></span>Bloqueada</span>
-                    </div>
-                </div>
-
-                <div class="trail-map" id="homeTrailMap">
-                    <div class="trail-step completed align-left" data-module="basico" data-trail="basico">
-                        <div class="trail-node">
-                            <img src="assets/tarefas/tarefa_basico1.png" alt="Fundamentos" class="trail-icon">
-                            <span class="trail-badge">Concluída</span>
-                        </div>
-                        <div class="trail-info">
-                            <h3 class="trail-step-title">Fundamentos</h3>
-                            <p class="trail-step-description">Conceitos básicos de sustentabilidade</p>
-                            <div class="trail-mini-progress">
-                                <div class="trail-mini-progress-bar">
-                                    <div class="trail-mini-progress-fill" style="width: 100%"></div>
-                                </div>
-                                <span class="trail-mini-progress-text">5/5 lições</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="trail-step active align-right" data-module="agua" data-trail="agua">
-                        <div class="trail-node">
-                            <img src="assets/tarefas/tarefa_agua.png" alt="Água e Vida" class="trail-icon">
-                            <span class="trail-badge">Agora</span>
-                        </div>
-                        <div class="trail-info">
-                            <h3 class="trail-step-title">Água e Vida</h3>
-                            <p class="trail-step-description">Conservação e uso consciente da água</p>
-                            <div class="trail-mini-progress">
-                                <div class="trail-mini-progress-bar">
-                                    <div class="trail-mini-progress-fill" style="width: 60%"></div>
-                                </div>
-                                <span class="trail-mini-progress-text">3/5 lições</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="trail-step available align-left" data-module="clima" data-trail="clima">
-                        <div class="trail-node">
-                            <img src="assets/tarefas/tarefa_clima.png" alt="Mudanças Climáticas" class="trail-icon">
-                            <span class="trail-badge neutral">Liberada</span>
-                        </div>
-                        <div class="trail-info">
-                            <h3 class="trail-step-title">Mudanças Climáticas</h3>
-                            <p class="trail-step-description">Entenda o aquecimento global</p>
-                            <div class="trail-mini-progress">
-                                <div class="trail-mini-progress-bar">
-                                    <div class="trail-mini-progress-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="trail-mini-progress-text">0/5 lições</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="trail-step locked align-right" data-module="consumo" data-trail="consumo">
-                        <div class="trail-node">
-                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Consumo Consciente" class="trail-icon">
-                            <span class="trail-badge locked">Bloqueada</span>
-                        </div>
-                        <div class="trail-info">
-                            <h3 class="trail-step-title">Consumo Consciente</h3>
-                            <p class="trail-step-description">Aprenda a consumir com responsabilidade</p>
-                            <div class="trail-mini-progress">
-                                <div class="trail-mini-progress-bar muted"></div>
-                                <span class="trail-mini-progress-text locked-text">Bloqueada</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="trail-step locked align-left" data-module="horta" data-trail="horta">
-                        <div class="trail-node">
-                            <img src="assets/tarefas/tarefa_bloqueada.png" alt="Horta Sustentável" class="trail-icon">
-                            <span class="trail-badge locked">Bloqueada</span>
-                        </div>
-                        <div class="trail-info">
-                            <h3 class="trail-step-title">Horta Sustentável</h3>
-                            <p class="trail-step-description">Cultive seu próprio alimento</p>
-                            <div class="trail-mini-progress">
-                                <div class="trail-mini-progress-bar muted"></div>
-                                <span class="trail-mini-progress-text locked-text">Bloqueada</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -400,9 +117,9 @@
             <img src="assets/brand/logo_sementis_branco.png" alt="Sementis">
         </div>
         <div class="nav-items-wrapper">
-            <button class="nav-item active">
-                <img src="assets/icons/menu_rodape_tarefa.png" alt="Trilhas">
-                <span>Trilhas</span>
+            <button class="nav-item">
+                <img src="assets/icons/menu_rodape_tarefa.png" alt="Tarefas">
+                <span>Tarefas</span>
             </button>
             <button class="nav-item">
                 <img src="assets/icons/menu_rodape_trofeu_liga.png" alt="Ligas">
