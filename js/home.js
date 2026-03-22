@@ -65,6 +65,7 @@ function handleNavigation(section) {
 // ===== Trail Interactions =====
 function initTrailInteractions() {
     const trailNodeItems = document.querySelectorAll('.trail-node-item');
+    let lastTappedNode = null;
 
     trailNodeItems.forEach(item => {
         const continueBtn = item.querySelector('.btn-continue');
@@ -85,23 +86,51 @@ function initTrailInteractions() {
             });
         }
 
-        // Add click to entire node for unlocked/active/completed nodes
-        if (!item.classList.contains('locked')) {
-            item.style.cursor = 'pointer';
-            item.addEventListener('click', () => {
+        // Mobile tap behavior: First tap shows tooltip, second tap navigates
+        let tapCount = 0;
+        let tapTimer = null;
+
+        item.addEventListener('click', (e) => {
+            const isMobile = window.innerWidth <= 768;
+
+            if (item.classList.contains('locked')) {
+                showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
+                return;
+            }
+
+            if (isMobile) {
+                // Mobile: First tap shows tooltip, second tap within 3s navigates
+                if (lastTappedNode && lastTappedNode !== item) {
+                    lastTappedNode.classList.remove('show-tooltip');
+                }
+
+                if (!item.classList.contains('show-tooltip')) {
+                    item.classList.add('show-tooltip');
+                    lastTappedNode = item;
+
+                    // Auto-hide tooltip after 5 seconds
+                    setTimeout(() => {
+                        item.classList.remove('show-tooltip');
+                    }, 5000);
+                } else {
+                    // Second tap - navigate
+                    if (item.classList.contains('completed')) {
+                        showNotification('Trilha completa! Revise as lições quando quiser.', 'info');
+                    } else {
+                        showTrailDetails(trailTitle);
+                    }
+                }
+            } else {
+                // Desktop: Click to navigate immediately
                 if (item.classList.contains('completed')) {
                     showNotification('Trilha completa! Clique em "Continuar" para revisar.', 'info');
                 } else {
                     showTrailDetails(trailTitle);
                 }
-            });
-        } else {
-            item.addEventListener('click', () => {
-                showNotification('Complete as trilhas anteriores para desbloquear!', 'info');
-            });
-        }
+            }
+        });
 
-        // Add hover animation effect
+        // Add hover animation effect for desktop
         if (!item.classList.contains('locked')) {
             item.addEventListener('mouseenter', () => {
                 const nodeCircle = item.querySelector('.node-circle');
@@ -111,6 +140,16 @@ function initTrailInteractions() {
             item.addEventListener('mouseleave', () => {
                 const nodeCircle = item.querySelector('.node-circle');
                 nodeCircle.style.transform = 'scale(1)';
+            });
+        }
+    });
+
+    // Close tooltips when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile && !e.target.closest('.trail-node-item')) {
+            trailNodeItems.forEach(item => {
+                item.classList.remove('show-tooltip');
             });
         }
     });

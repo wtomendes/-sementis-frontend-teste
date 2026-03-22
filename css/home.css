@@ -596,6 +596,7 @@
     z-index: 100;
 }
 
+/* Arrow for tooltip */
 .node-tooltip::before {
     content: '';
     position: absolute;
@@ -606,7 +607,15 @@
     border-bottom-color: rgba(39, 39, 94, 0.98);
 }
 
+/* Show tooltip on hover (desktop) */
 .trail-node-item:hover .node-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: all;
+}
+
+/* Show tooltip on mobile when node is tapped/focused */
+.trail-node-item.show-tooltip .node-tooltip {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
     pointer-events: all;
@@ -618,6 +627,19 @@
 
 .trail-node-item.locked:hover .node-tooltip {
     opacity: 0.9;
+}
+
+/* Mobile-specific: Make tooltips easier to trigger */
+@media (max-width: 768px) {
+    .trail-node-item {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* On mobile, show tooltip on first tap, navigate on second tap */
+    .trail-node-item:active .node-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 .node-tooltip h3 {
