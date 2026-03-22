@@ -1,0 +1,102 @@
+{
+  "name": "Sementis - Educação em Sustentabilidade",
+  "short_name": "Sementis",
+  "description": "Plataforma gamificada para ensinar conceitos de sustentabilidade através de jogos, quizzes e missões interativas",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#1a1a4a",
+  "background_color": "#1a1a4a",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/tela_celular.png",
+      "sizes": "540x1200",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": [
+    "education",
+    "games"
+  ],
+  "shortcuts": [
+    {
+      "name": "Começar Aprendizado",
+      "short_name": "Aprender",
+      "description": "Ir direto para as trilhas de aprendizado",
+      "url": "/home.html",
+      "icons": [
+        {
+          "src": "assets/icons/menu_rodape_tarefa.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Entrar",
+      "short_name": "Login",
+      "description": "Fazer login na plataforma",
+      "url": "/login.html",
+      "icons": [
+        {
+          "src": "assets/icons/icone_usuario.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
