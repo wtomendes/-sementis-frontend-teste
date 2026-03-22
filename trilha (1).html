@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+
+  :root {
+    --bg:           #27275e;
+    --green:        #a9ff71;
+    --green-dark:   #7acc44;
+    --node-locked:  #32325e;
+    --node-border:  #44447a;
+    --path-done:    #a9ff71;
+    --path-locked:  #3d3d72;
+    --text-muted:   #6060a0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  .header {
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 28px 20px;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .header p {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .xp-bar-wrap {
+    margin: 14px auto 0;
+    width: 200px;
+    height: 10px;
+    background: #1e1e4a;
+    border-radius: 99px;
+    overflow: hidden;
+    border: 2px solid #3a3a6a;
+  }
+  .xp-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--green), #d4ff9e);
+    border-radius: 99px;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── TRAIL SCENE ─────────────────────────── */
+  .trail-scene {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .trail-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── NODE ────────────────────────────────── */
+  .node {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    transform: translate(-50%, -50%);
+    cursor: default;
+  }
+
+  .node-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: transform .18s ease;
+  }
+  .node:hover .node-inner { transform: scale(1.08); }
+
+  .node.locked .node-inner {
+    background: var(--node-locked);
+    box-shadow: 0 6px 0 #1a1a40, inset 0 1px 0 #4a4a80;
+    border: 3px solid var(--node-border);
+  }
+  .node.done .node-inner,
+  .node.active .node-inner {
+    background: var(--green);
+    box-shadow: 0 6px 0 var(--green-dark), 0 0 30px #a9ff7166;
+    border: 3px solid #d4ff9e;
+  }
+  .node.active .node-inner {
+    animation: nodePulse 2s ease-in-out infinite;
+    cursor: pointer;
+  }
+  @keyframes nodePulse {
+    0%,100% { box-shadow: 0 6px 0 var(--green-dark), 0 0 24px #a9ff7155; }
+    50%      { box-shadow: 0 6px 0 var(--green-dark), 0 0 56px #a9ff71bb; }
+  }
+
+  .node img {
+    width: 62%; height: 62%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .node-label {
+    position: absolute;
+    bottom: -22px; left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 11px; font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  .node.done .node-label,
+  .node.active .node-label { color: var(--green); }
+
+  /* star badge */
+  .star-badge {
+    position: absolute;
+    top: -4px; right: -4px;
+    width: 26px; height: 26px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    box-shadow: 0 2px 6px #0004;
+    border: 2px solid var(--green-dark);
+  }
+
+  /* bounce arrow */
+  .arrow-bounce {
+    position: absolute;
+    top: -30px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    color: var(--green);
+    animation: bounce .75s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes bounce {
+    from { transform: translateX(-50%) translateY(0);    }
+    to   { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* ── SVG PATHS ───────────────────────────── */
+  .seg-done   { stroke: var(--path-done);   stroke-width: 7; fill: none;
+                stroke-dasharray: 16 11; stroke-linecap: round; }
+  .seg-locked { stroke: var(--path-locked); stroke-width: 7; fill: none;
+                stroke-dasharray: 16 11; stroke-linecap: round; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Trilha de Aprendizado</h1>
+  <p>1 de 7 concluídas</p>
+  <div class="xp-bar-wrap">
+    <div class="xp-bar-fill" id="xpFill"></div>
+  </div>
+</div>
+
+<div class="trail-scene" id="scene"></div>
+
+<script>
+const lessons = [
+  { label: 'Introdução', state: 'done'   },
+  { label: 'Módulo 1',   state: 'active' },
+  { label: 'Módulo 2',   state: 'locked' },
+  { label: 'Módulo 3',   state: 'locked' },
+  { label: 'Módulo 4',   state: 'locked' },
+  { label: 'Módulo 5',   state: 'locked' },
+  { label: 'Final',      state: 'locked' },
+];
+
+// Horizontal anchors (fraction 0..1) — nice organic S-curve
+const X_ANCHORS = [0.25, 0.75, 0.72, 0.28, 0.25, 0.75, 0.28];
+const V_STEP    = 148;
+const PAD_TOP   = 70;
+const PAD_BOT   = 90;
+
+function build() {
+  const scene = document.getElementById('scene');
+  const W = Math.min(window.innerWidth, 420);
+  const H = PAD_TOP + V_STEP * (lessons.length - 1) + PAD_BOT;
+  scene.style.height = H + 'px';
+
+  // Centers
+  const pts = lessons.map((_, i) => ({
+    x: X_ANCHORS[i] * W,
+    y: PAD_TOP + i * V_STEP,
+  }));
+
+  // ── SVG ────────────────────────────────────
+  const svgNS = 'http://www.w3.org/2000/svg';
+  let svg = scene.querySelector('.trail-svg');
+  if (!svg) { svg = document.createElementNS(svgNS,'svg'); svg.classList.add('trail-svg'); scene.appendChild(svg); }
+  svg.innerHTML = '';
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  for (let i = 0; i < pts.length - 1; i++) {
+    const a = pts[i], b = pts[i+1];
+    const isDone = lessons[i].state === 'done';
+
+    // Catmull-style: pull control points toward the far side to get juicy S-curves
+    const flip = (i % 2 === 0) ? 1 : -1;
+    const bulge = W * 0.22 * flip;
+    const midY = (a.y + b.y) / 2;
+    const cp1x = a.x + bulge, cp1y = midY - V_STEP * 0.1;
+    const cp2x = b.x + bulge, cp2y = midY + V_STEP * 0.1;
+
+    const p = document.createElementNS(svgNS,'path');
+    p.setAttribute('d', `M${a.x},${a.y} C${cp1x},${cp1y} ${cp2x},${cp2y} ${b.x},${b.y}`);
+    p.setAttribute('class', isDone ? 'seg-done' : 'seg-locked');
+    svg.appendChild(p);
+  }
+
+  // ── Nodes ──────────────────────────────────
+  scene.querySelectorAll('.node').forEach(n => n.remove());
+
+  lessons.forEach((lesson, i) => {
+    const {x, y} = pts[i];
+    const div = document.createElement('div');
+    div.className = `node ${lesson.state}`;
+    div.style.left = x + 'px';
+    div.style.top  = y + 'px';
+
+    const inner = document.createElement('div');
+    inner.className = 'node-inner';
+
+    const img = document.createElement('img');
+    img.src = (lesson.state === 'locked')
+      ? 'assets/tarefa_bloqueada.png'
+      : 'assets/tarefa_quiz_selo_correto.png';
+    img.alt = lesson.state;
+    inner.appendChild(img);
+
+    if (lesson.state === 'done') {
+      const star = document.createElement('div');
+      star.className = 'star-badge';
+      star.textContent = '⭐';
+      inner.appendChild(star);
+    }
+
+    if (lesson.state === 'active') {
+      const arrow = document.createElement('div');
+      arrow.className = 'arrow-bounce';
+      arrow.textContent = '▼';
+      inner.appendChild(arrow);
+    }
+
+    div.appendChild(inner);
+
+    const lbl = document.createElement('span');
+    lbl.className = 'node-label';
+    lbl.textContent = lesson.label;
+    div.appendChild(lbl);
+
+    scene.appendChild(div);
+  });
+
+  // XP bar
+  const done = lessons.filter(l => l.state === 'done').length;
+  setTimeout(() => {
+    document.getElementById('xpFill').style.width = (done / lessons.length * 100) + '%';
+  }, 400);
+}
+
+build();
+window.addEventListener('resize', build);
+</script>
+</body>
+</html>
