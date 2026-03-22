@@ -1,3 +1,0 @@
-Cor background: #27275e
-
-Cor Verde dos botões: #a9ff71
