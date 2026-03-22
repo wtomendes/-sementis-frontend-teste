@@ -1,7 +1,7 @@
 // ===== Home Page JavaScript =====
 
 // View management state
-let currentView = 'home'; // 'home', 'modules', 'trilhas', 'trail-detail'
+let currentView = 'modules'; // 'home', 'modules', 'trilhas', 'trail-detail'
 let currentModule = null;
 let currentTrilha = null;
 
@@ -167,7 +167,7 @@ function handleNavigation(section) {
 
     switch(section) {
         case 'Trilhas':
-            // Show modules view
+            // Show modules view (the default landing)
             showModulesView();
             break;
         case 'Ligas':
