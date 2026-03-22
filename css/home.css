@@ -1351,6 +1351,207 @@
     color: var(--color-gray-500);
 }
 
+/* ===== Trilhas View ===== */
+.trilhas-view {
+    animation: fadeIn 0.3s ease;
+}
+
+.trilhas-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.trilhas-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-white);
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .trilhas-title {
+        font-size: 32px;
+    }
+}
+
+.trilhas-subtitle {
+    font-size: 14px;
+    color: var(--color-gray-300);
+    margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+    .trilhas-subtitle {
+        font-size: 16px;
+    }
+}
+
+.trilhas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 640px) {
+    .trilhas-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .trilhas-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+    }
+}
+
+.trilha-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    animation: slideUp 0.5s ease backwards;
+}
+
+.trilha-card:nth-child(1) { animation-delay: 0s; }
+.trilha-card:nth-child(2) { animation-delay: 0.1s; }
+.trilha-card:nth-child(3) { animation-delay: 0.2s; }
+.trilha-card:nth-child(4) { animation-delay: 0.3s; }
+.trilha-card:nth-child(5) { animation-delay: 0.4s; }
+
+.trilha-card:hover:not(.locked) {
+    transform: translateY(-8px);
+    border-color: rgba(169, 255, 113, 0.4);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.trilha-card.completed {
+    background: linear-gradient(135deg, rgba(169, 255, 113, 0.2), rgba(169, 255, 113, 0.05));
+    border-color: var(--color-accent);
+}
+
+.trilha-card.active {
+    background: linear-gradient(135deg, rgba(169, 255, 113, 0.15), rgba(169, 255, 113, 0.05));
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 32px rgba(169, 255, 113, 0.2);
+}
+
+.trilha-card.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.trilha-card.locked:hover {
+    transform: none;
+}
+
+.trilha-icon-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+}
+
+@media (min-width: 768px) {
+    .trilha-icon-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+.trilha-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.trilha-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.5;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.trilha-completion-check {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 40px;
+    height: 40px;
+}
+
+.trilha-title-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .trilha-title-text {
+        font-size: 20px;
+    }
+}
+
+.trilha-description {
+    font-size: 13px;
+    color: var(--color-gray-300);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+    .trilha-description {
+        font-size: 14px;
+    }
+}
+
+.trilha-progress {
+    margin-top: 16px;
+}
+
+.trilha-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.trilha-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent));
+    border-radius: var(--radius-full);
+    transition: width 0.5s ease;
+}
+
+.trilha-progress-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-gray-300);
+}
+
+.trilha-card.active .trilha-progress-text {
+    color: var(--color-accent);
+}
+
+.trilha-progress-text.locked-text {
+    color: var(--color-gray-500);
+}
+
 /* ===== Trail Detail View ===== */
 .trail-detail-view {
     animation: fadeIn 0.3s ease;
